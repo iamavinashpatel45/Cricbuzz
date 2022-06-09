@@ -1,12 +1,12 @@
-class jason_to_dart {
+class json_info {
   String? apikey;
   List<Data>? data;
   String? status;
   Info? info;
 
-  jason_to_dart({this.apikey, this.data, this.status, this.info});
+  json_info({this.apikey, this.data, this.status, this.info});
 
-  jason_to_dart.fromJson(Map<String, dynamic> json) {
+  json_info.fromJson(Map<String, dynamic> json) {
     apikey = json['apikey'];
     if (json['data'] != null) {
       data = <Data>[];
@@ -33,50 +33,68 @@ class jason_to_dart {
 }
 
 class Data {
-  String? id;
-  String? name;
-  String? startDate;
-  String? endDate;
-  int? odi;
-  int? t20;
-  int? test;
-  int? squads;
-  int? matches;
+  String? teamName;
+  List<Players>? players;
 
-  Data(
-      {this.id,
-        this.name,
-        this.startDate,
-        this.endDate,
-        this.odi,
-        this.t20,
-        this.test,
-        this.squads,
-        this.matches});
+  Data({this.teamName, this.players});
 
   Data.fromJson(Map<String, dynamic> json) {
+    teamName = json['teamName'];
+    if (json['players'] != null) {
+      players = <Players>[];
+      json['players'].forEach((v) {
+        players!.add(new Players.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['teamName'] = this.teamName;
+    if (this.players != null) {
+      data['players'] = this.players!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Players {
+  String? id;
+  String? name;
+  String? role;
+  String? battingStyle;
+  String? bowlingStyle;
+  String? country;
+  String? playerImg;
+
+  Players(
+      {this.id,
+        this.name,
+        this.role,
+        this.battingStyle,
+        this.bowlingStyle,
+        this.country,
+        this.playerImg});
+
+  Players.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    startDate = json['startDate'];
-    endDate = json['endDate'];
-    odi = json['odi'];
-    t20 = json['t20'];
-    test = json['test'];
-    squads = json['squads'];
-    matches = json['matches'];
+    role = json['role'];
+    battingStyle = json['battingStyle'];
+    bowlingStyle = json['bowlingStyle'];
+    country = json['country'];
+    playerImg = json['playerImg'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
-    data['startDate'] = this.startDate;
-    data['endDate'] = this.endDate;
-    data['odi'] = this.odi;
-    data['t20'] = this.t20;
-    data['test'] = this.test;
-    data['squads'] = this.squads;
-    data['matches'] = this.matches;
+    data['role'] = this.role;
+    data['battingStyle'] = this.battingStyle;
+    data['bowlingStyle'] = this.bowlingStyle;
+    data['country'] = this.country;
+    data['playerImg'] = this.playerImg;
     return data;
   }
 }
@@ -87,9 +105,6 @@ class Info {
   int? hitsLimit;
   int? credits;
   int? server;
-  int? offsetRows;
-  int? cache;
-  int? totalRows;
   double? queryTime;
   int? s;
 
@@ -99,9 +114,6 @@ class Info {
         this.hitsLimit,
         this.credits,
         this.server,
-        this.offsetRows,
-        this.cache,
-        this.totalRows,
         this.queryTime,
         this.s});
 
@@ -111,9 +123,6 @@ class Info {
     hitsLimit = json['hitsLimit'];
     credits = json['credits'];
     server = json['server'];
-    offsetRows = json['offsetRows'];
-    cache = json['cache'];
-    totalRows = json['totalRows'];
     queryTime = json['queryTime'];
     s = json['s'];
   }
@@ -125,9 +134,6 @@ class Info {
     data['hitsLimit'] = this.hitsLimit;
     data['credits'] = this.credits;
     data['server'] = this.server;
-    data['offsetRows'] = this.offsetRows;
-    data['cache'] = this.cache;
-    data['totalRows'] = this.totalRows;
     data['queryTime'] = this.queryTime;
     data['s'] = this.s;
     return data;
