@@ -73,13 +73,15 @@ class _finish_matchState extends State<finish_match> {
             ],
           ),
         ),
+        Divider(color: Colors.grey[400],),
         Padding(
           padding: EdgeInsets.all(8),
           child: Text(
             fun_live.data.status,
             style: TextStyle(fontSize: 15, color: Colors.blue),
           ),
-        )
+        ),
+        Divider(color: Colors.grey[400],),
       ],
     );
   }

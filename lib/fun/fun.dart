@@ -37,14 +37,8 @@ class fun {
     }
   }
 
-  // var res = await http.get(Uri.parse(
-  // 'https://api.cricapi.com/v1/currentMatches?apikey=95c00616-5fb8-49ba-b4dc-4a9a830a9872&offset=0'));
-  // var map = json.decode(res.body);
-  // data = map['data'];
-  // print('1');
 
   static getdata() async {
-    internet = await checkInternet();
     if (internet == true) {
       var res = await http.get(Uri.parse(
           'https://api.cricapi.com/v1/currentMatches?apikey=95c00616-5fb8-49ba-b4dc-4a9a830a9872&offset=0'));
@@ -93,10 +87,6 @@ class fun {
     status = string.contains('won');
   }
 
-  // var res = await http.get(Uri.parse(s1));
-  // var map = json.decode(res.body);
-  // print('1');
-  // data2= map['data'];
 
   static getdata_2() async {
     var res = await http.get(Uri.parse(s1));

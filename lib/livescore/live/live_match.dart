@@ -108,7 +108,7 @@ class _live_match_2State extends State<live_match_2> {
               fun_live.data.status,
               style: TextStyle(
                 color: fun_live.status == false ? Colors.red : Colors.blue,
-                fontSize: fun_live.data.status.length < 50 ? 16 : 13,
+                fontSize: fun_live.data.status.length < 45 ? 16 : 13,
               ),
             ),
           ),
@@ -192,6 +192,7 @@ class _live_match_2State extends State<live_match_2> {
                               child: Text(
                                 fun_live.data.scorecard[index].batting[index1]
                                     .batsman.name,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: Colors.blue,
                                 ),

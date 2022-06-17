@@ -19,7 +19,10 @@ class _live_matchState extends State<live_match> {
       new GlobalKey<RefreshIndicatorState>();
 
   set() async {
-    await fun.getdata();
+    fun.internet = await fun.checkInternet();
+    if (fun.internet == true) {
+      await fun.getdata();
+    }
     setState(() {});
   }
 
@@ -51,27 +54,21 @@ class _live_matchState extends State<live_match> {
                       fun.short(index);
                       fun.check_score(index);
                       fun.checkstatus(index);
-                      //reload();
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),
                         child: InkWell(
                           onTap: () => Navigator.of(context)
                               .push(
-                            MaterialPageRoute(builder: (context) => live_screen(
-                              link: d['id'],
-                            )),
-                          )
+                                MaterialPageRoute(
+                                    builder: (context) => live_screen(
+                                          link: d['id'],
+                                        )),
+                              )
                               .then((value) => {
-                                fun_info.data=null,
-                                fun_live.data=null,
-                          }),
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => live_screen(
-                          //               link: d['id'],
-                          //             ))),
+                                    fun_info.data = null,
+                                    fun_live.data = null,
+                                  }),
                           child: Card(
                             borderOnForeground: false,
                             color: Colors.white,
@@ -207,15 +204,21 @@ class _live_matchState extends State<live_match> {
                                                                 color: Colors
                                                                     .black),
                                                           )
-                                                        : Text(
-                                                            d['teamInfo'][0]
-                                                                ['name'],
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black)),
+                                                        : SizedBox(
+                                                            width: 160,
+                                                            child: Text(
+                                                                d['teamInfo'][0]
+                                                                    ['name'],
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black)),
+                                                          ),
                                                   ],
                                                 ),
                                                 fun.check == true
@@ -341,9 +344,14 @@ class _live_matchState extends State<live_match> {
                                               children: [
                                                 Row(
                                                   children: [
-                                                    Image.network(
-                                                      d['teamInfo'][1]['img'],
-                                                      height: 30,
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              70),
+                                                      child: Image.network(
+                                                        d['teamInfo'][1]['img'],
+                                                        height: 30,
+                                                      ),
                                                     ),
                                                     SizedBox(
                                                       width: 10,
@@ -359,15 +367,21 @@ class _live_matchState extends State<live_match> {
                                                                 color: Colors
                                                                     .black),
                                                           )
-                                                        : Text(
-                                                            d['teamInfo'][1]
-                                                                ['name'],
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black)),
+                                                        : SizedBox(
+                                                            width: 160,
+                                                            child: Text(
+                                                                d['teamInfo'][1]
+                                                                    ['name'],
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black)),
+                                                          ),
                                                   ],
                                                 ),
                                                 fun.check == true
@@ -508,11 +522,41 @@ class _live_matchState extends State<live_match> {
                     }),
               )
         : Container(
-            child: Center(
-                child: CircularProgressIndicator(
-              color: Colors.white,
-            ) //Image.asset('asstes/nointernet.png'),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Whoops!',
+                  style: TextStyle(fontSize: 40),
                 ),
+                Text(
+                  'No Internet Connection Found',
+                  style: TextStyle(fontSize: 25),
+                ),
+                Text(
+                  'Check Your Internet',
+                  style: TextStyle(fontSize: 25),
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      if (fun.checkInternet() == true) {
+                        if (fun.data?.length == null) {
+                          set();
+                        }
+                        setState(() {});
+                      } else {
+                        setState(() {});
+                      }
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                    ),
+                    child: Text(
+                      'Try Again',
+                      style: TextStyle(color: Colors.black),
+                    ))
+              ],
+            ),
           );
   }
 }

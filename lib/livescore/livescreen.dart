@@ -8,10 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:share/share.dart';
 
 class live_screen extends StatefulWidget {
   final String? link;
-
   const live_screen({Key? key, required this.link}) : super(key: key);
 
   @override
@@ -20,6 +20,32 @@ class live_screen extends StatefulWidget {
 
 class _live_screenState extends State<live_screen> {
   String? link;
+
+  share_optap() async {
+    String x = ' ';
+    await Share.share(fun_live.data.name);
+    for (int i = 0; i < fun_live.data.score.length; i++) {
+      await Share.share(fun_live.test == false
+          ? x = x +
+              fun_live.name(i)! +
+              ' ' +
+              fun_live.data.score[i].r.toString() +
+              '-' +
+              fun_live.data.score[i].w.toString() +
+              ' (' +
+              fun_live.data.score[i].o.toString() +
+              ')'
+          : x = x +
+              fun_live.data.score[i].inning! +
+              ' ' +
+              fun_live.data.score[i].r.toString() +
+              '-' +
+              fun_live.data.score[i].w.toString() +
+              ' (' +
+              fun_live.data.score[i].o.toString() +
+              ')');
+    }
+  }
 
   getlink(String? l) {
     link = l;
@@ -35,7 +61,7 @@ class _live_screenState extends State<live_screen> {
 
   @override
   void initState() {
-    fun_live.progressbar=true;
+    fun_live.progressbar = true;
     getlink(widget.link);
     set();
     super.initState();
@@ -72,21 +98,42 @@ class _live_screenState extends State<live_screen> {
                       ),
                     ],
                   ),
-                  title: fun_live.shortname == true
-                      ? Text(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 250,
+                        child: fun_live.shortname == true
+                            ? Text(
                           fun_live.data.teamInfo[0].shortname +
                               ' vs ' +
                               fun_live.data.teamInfo[1].shortname,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                        )
-                      : Text(
-                          fun_live.data.teamInfo[0].name +
-                              ' vs ' +
-                              fun_live.data.teamInfo[1].name,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)))
+                              color: Colors.white),
+                        )
+                            : Text(
+                            fun_live.data.teamInfo[0].name +
+                                ' vs ' +
+                                fun_live.data.teamInfo[1].name,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: InkWell(
+                          onTap: () {
+                            share_optap();
+                          },
+                          child: Icon(Icons.share),
+                        ),
+                      )
+                    ],
+                  ),
+                )
               : AppBar(
                   backgroundColor: Color.fromARGB(255, 0, 180, 137),
                 ),
@@ -96,8 +143,12 @@ class _live_screenState extends State<live_screen> {
                     info(
                       link: fun_live.data.id,
                     ),
-                    live_details(link: link,),
-                    scorecard(link: link,),
+                    live_details(
+                      link: link,
+                    ),
+                    scorecard(
+                      link: link,
+                    ),
                   ],
                 )
               : Center(

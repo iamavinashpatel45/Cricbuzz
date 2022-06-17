@@ -109,12 +109,12 @@ class _infoState extends State<info> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width/3,
+                        width: MediaQuery.of(context).size.width / 3,
                         child: Text('Match'),
                       ),
                       Expanded(
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width/1.3,
+                          width: MediaQuery.of(context).size.width / 1.3,
                           child: Text(fun_live.data.name),
                         ),
                       )
@@ -132,12 +132,12 @@ class _infoState extends State<info> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width/3,
+                        width: MediaQuery.of(context).size.width / 3,
                         child: Text('MatchType'),
                       ),
                       Expanded(
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width/1.3,
+                          width: MediaQuery.of(context).size.width / 1.3,
                           child: Text(fun_live.data.matchType),
                         ),
                       )
@@ -155,29 +155,52 @@ class _infoState extends State<info> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width/3,
+                        width: MediaQuery.of(context).size.width / 3,
                         child: Text('Date'),
                       ),
                       Expanded(
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width/1.3,
+                          width: MediaQuery.of(context).size.width / 1.3,
                           child: fun_live.test == true
                               ? Text(
-                            fun_live.date()! +
-                                fun_live.day.toString() +
-                                ' - ' +
-                                fun_live.date()! +
-                                (fun_live.day! + 4)
-                                    .toString(),
-                            style: TextStyle(
-                                fontSize: 12),
-                          )
+                                  fun_live.date()! +
+                                      fun_live.day.toString() +
+                                      ' - ' +
+                                      fun_live.date()! +
+                                      (fun_live.day! + 4).toString(),
+                                  style: TextStyle(fontSize: 12),
+                                )
                               : Text(
-                            fun_live.date()! +
-                                ' ' +
-                                fun_live.day.toString(),
-                            style: TextStyle(
-                                fontSize: 12),
+                                  fun_live.date()! +
+                                      ' ' +
+                                      fun_live.day.toString(),
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 3,
+                        child: Text('Time'),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.3,
+                          child: Text(
+                            fun_live.data.dateTimeGMT.substring(
+                                11, fun_live.data.dateTimeGMT.length),
                           ),
                         ),
                       )
@@ -195,36 +218,12 @@ class _infoState extends State<info> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width/3,
-                        child: Text('Time'),
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width/1.3,
-                          child: Text(fun_live.data.dateTimeGMT.substring(
-                              11, fun_live.data.dateTimeGMT.length),),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width/3,
+                        width: MediaQuery.of(context).size.width / 3,
                         child: Text('Venue'),
                       ),
                       Expanded(
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width/1.3,
+                          width: MediaQuery.of(context).size.width / 1.3,
                           child: Text(fun_live.data.venue),
                         ),
                       )

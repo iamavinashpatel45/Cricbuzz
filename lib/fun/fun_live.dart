@@ -101,7 +101,6 @@ class fun_live {
       }
     } else {
       Fluttertoast.showToast(msg: 'You are currently Offline');
-      return [];
     }
     checktest();
     checkstatus();

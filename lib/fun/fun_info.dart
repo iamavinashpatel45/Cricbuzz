@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:cricket/livescore/info/json_info.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -63,7 +62,6 @@ class fun_info{
       }
     } else {
       Fluttertoast.showToast(msg: 'You are currently Offline');
-      return [];
     }
   }
 }

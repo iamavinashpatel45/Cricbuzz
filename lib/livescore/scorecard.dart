@@ -1,6 +1,7 @@
 import 'package:cricket/fun/fun_live.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sticky_headers/sticky_headers/widget.dart';
 
 class scorecard extends StatefulWidget {
   final String? link;
@@ -21,7 +22,7 @@ class _scorecardState extends State<scorecard> {
   String? link;
 
   GlobalKey<RefreshIndicatorState> global_key =
-  new GlobalKey<RefreshIndicatorState>();
+      new GlobalKey<RefreshIndicatorState>();
 
   getlink(String? l) {
     link = l;
@@ -42,7 +43,7 @@ class _scorecardState extends State<scorecard> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       key: global_key,
-      onRefresh: ()=>set(),
+      onRefresh: () => set(),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,30 +83,40 @@ class _scorecardState extends State<scorecard> {
                     itemCount: fun_live.data.score.length,
                     itemBuilder: (context, index) {
                       var d = fun_live.data.scorecard[index];
-                      return InkWell(
-                        onTap: () {
-                          setState(() {
-                            tap = !tap;
-                            tapstring = index.toString();
-                            if (tap == false) {
-                              tapstring = '';
-                            }
-                          });
-                        },
-                        child: Column(
-                          children: [
-                            Card(
-                              color: tap == true && tapstring == index.toString()
-                                  ? Color.fromARGB(255, 0, 180, 137)
-                                  : Colors.white,
-                              child: ListTile(
-                                title: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    fun_live.test == false
-                                        ? Text(
-                                            fun_live.name(index)!,
+                      return StickyHeader(
+                        header: InkWell(
+                          onTap: () {
+                            setState(() {
+                              tap = !tap;
+                              tapstring = index.toString();
+                              if (tap == false) {
+                                tapstring = '';
+                              }
+                            });
+                          },
+                          child: Card(
+                            color: tap == true && tapstring == index.toString()
+                                ? Color.fromARGB(255, 0, 180, 137)
+                                : Colors.white,
+                            child: ListTile(
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  fun_live.test == false
+                                      ? Text(
+                                          fun_live.name(index)!,
+                                          style: TextStyle(
+                                            color: tap == true &&
+                                                    tapstring ==
+                                                        index.toString()
+                                                ? Colors.white
+                                                : Colors.black,
+                                          ),
+                                        )
+                                      : Expanded(
+                                          child: Text(
+                                            fun_live.data.score[index].inning,
                                             style: TextStyle(
                                               color: tap == true &&
                                                       tapstring ==
@@ -113,57 +124,49 @@ class _scorecardState extends State<scorecard> {
                                                   ? Colors.white
                                                   : Colors.black,
                                             ),
-                                          )
-                                        : Expanded(
-                                            child: Text(
-                                              fun_live.data.score[index].inning,
-                                              style: TextStyle(
-                                                color: tap == true &&
-                                                        tapstring ==
-                                                            index.toString()
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                              ),
+                                          ),
+                                        ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        fun_live.data.score[index].r
+                                                .toString() +
+                                            '-' +
+                                            fun_live.data.score[index].w
+                                                .toString() +
+                                            ' (' +
+                                            fun_live.data.score[index].o
+                                                .toString() +
+                                            ')',
+                                        style: TextStyle(
+                                          color: tap == true &&
+                                                  tapstring == index.toString()
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      tap == true &&
+                                              tapstring == index.toString()
+                                          ? Icon(
+                                              Icons.keyboard_arrow_up,
+                                              color: Colors.white,
+                                            )
+                                          : Icon(
+                                              Icons.keyboard_arrow_down,
+                                              color: Colors.black,
                                             ),
-                                          ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          fun_live.data.score[index].r
-                                                  .toString() +
-                                              '-' +
-                                              fun_live.data.score[index].w
-                                                  .toString() +
-                                              ' (' +
-                                              fun_live.data.score[index].o
-                                                  .toString() +
-                                              ')',
-                                          style: TextStyle(
-                                            color: tap == true &&
-                                                    tapstring == index.toString()
-                                                ? Colors.white
-                                                : Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        tap == true &&
-                                                tapstring == index.toString()
-                                            ? Icon(
-                                                Icons.keyboard_arrow_up,
-                                                color: Colors.white,
-                                              )
-                                            : Icon(
-                                                Icons.keyboard_arrow_down,
-                                                color: Colors.black,
-                                              ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
+                          ),
+                        ),
+                        content: Column(
+                          children: [
                             if (tap == true && tapstring == index.toString())
                               Column(
                                 children: [
@@ -273,8 +276,8 @@ class _scorecardState extends State<scorecard> {
                                                           const EdgeInsets.only(
                                                               left: 10),
                                                       child: Text(
-                                                        d.batting[index2].batsman
-                                                            .name,
+                                                        d.batting[index2]
+                                                            .batsman.name,
                                                         style: TextStyle(
                                                           color: Colors.blue,
                                                         ),
@@ -282,86 +285,93 @@ class _scorecardState extends State<scorecard> {
                                                     ),
                                                   ),
                                                   SizedBox(
-                                                      width:
-                                                          (MediaQuery.of(context)
-                                                                      .size
-                                                                      .width -
-                                                                  180) /
-                                                              5,
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              180) /
+                                                          5,
                                                       child: Row(
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment.end,
+                                                            MainAxisAlignment
+                                                                .end,
                                                         children: [
                                                           Text(
                                                             d.batting[index2].r
                                                                 .toString(),
                                                             style: TextStyle(
                                                               fontWeight:
-                                                                  FontWeight.bold,
+                                                                  FontWeight
+                                                                      .bold,
                                                             ),
                                                           ),
                                                         ],
                                                       )),
                                                   SizedBox(
-                                                      width:
-                                                          (MediaQuery.of(context)
-                                                                      .size
-                                                                      .width -
-                                                                  180) /
-                                                              5,
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              180) /
+                                                          5,
                                                       child: Row(
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment.end,
+                                                            MainAxisAlignment
+                                                                .end,
                                                         children: [
-                                                          Text(d.batting[index2].b
+                                                          Text(d
+                                                              .batting[index2].b
                                                               .toString()),
                                                         ],
                                                       )),
                                                   SizedBox(
-                                                      width:
-                                                          (MediaQuery.of(context)
-                                                                      .size
-                                                                      .width -
-                                                                  180) /
-                                                              7,
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              180) /
+                                                          7,
                                                       child: Row(
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment.end,
+                                                            MainAxisAlignment
+                                                                .end,
                                                         children: [
-                                                          Text(d
-                                                              .batting[index2].i4s
+                                                          Text(d.batting[index2]
+                                                              .i4s
                                                               .toString()),
                                                         ],
                                                       )),
                                                   SizedBox(
-                                                      width:
-                                                          (MediaQuery.of(context)
-                                                                      .size
-                                                                      .width -
-                                                                  180) /
-                                                              7,
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              180) /
+                                                          7,
                                                       child: Row(
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment.end,
+                                                            MainAxisAlignment
+                                                                .end,
                                                         children: [
-                                                          Text(d
-                                                              .batting[index2].i6s
+                                                          Text(d.batting[index2]
+                                                              .i6s
                                                               .toString()),
                                                         ],
                                                       )),
                                                   SizedBox(
-                                                      width:
-                                                          (MediaQuery.of(context)
-                                                                      .size
-                                                                      .width -
-                                                                  180) /
-                                                              5,
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              180) /
+                                                          5,
                                                       child: Row(
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment.end,
+                                                            MainAxisAlignment
+                                                                .end,
                                                         children: [
-                                                          Text(d
-                                                              .batting[index2].sr
+                                                          Text(d.batting[index2]
+                                                              .sr
                                                               .toStringAsFixed(
                                                                   1)),
                                                         ],
@@ -403,16 +413,16 @@ class _scorecardState extends State<scorecard> {
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              Text(
-                                                  ', b ' + d.extras.b.toString()),
+                                              Text(', b ' +
+                                                  d.extras.b.toString()),
                                               Text(', lb ' +
                                                   d.extras.lb.toString()),
-                                              Text(
-                                                  ', w ' + d.extras.w.toString()),
+                                              Text(', w ' +
+                                                  d.extras.w.toString()),
                                               Text(', nb ' +
                                                   d.extras.nb.toString()),
-                                              Text(
-                                                  ', p ' + d.extras.p.toString()),
+                                              Text(', p ' +
+                                                  d.extras.p.toString()),
                                             ],
                                           )
                                         ],
@@ -570,11 +580,12 @@ class _scorecardState extends State<scorecard> {
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                    width: (MediaQuery.of(context)
-                                                                .size
-                                                                .width -
-                                                            180) /
-                                                        5,
+                                                    width:
+                                                        (MediaQuery.of(context)
+                                                                    .size
+                                                                    .width -
+                                                                180) /
+                                                            5,
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment.end,
@@ -584,11 +595,12 @@ class _scorecardState extends State<scorecard> {
                                                       ],
                                                     )),
                                                 SizedBox(
-                                                    width: (MediaQuery.of(context)
-                                                                .size
-                                                                .width -
-                                                            180) /
-                                                        5,
+                                                    width:
+                                                        (MediaQuery.of(context)
+                                                                    .size
+                                                                    .width -
+                                                                180) /
+                                                            5,
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment.end,
@@ -598,11 +610,12 @@ class _scorecardState extends State<scorecard> {
                                                       ],
                                                     )),
                                                 SizedBox(
-                                                    width: (MediaQuery.of(context)
-                                                                .size
-                                                                .width -
-                                                            180) /
-                                                        7,
+                                                    width:
+                                                        (MediaQuery.of(context)
+                                                                    .size
+                                                                    .width -
+                                                                180) /
+                                                            7,
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment.end,
@@ -612,11 +625,12 @@ class _scorecardState extends State<scorecard> {
                                                       ],
                                                     )),
                                                 SizedBox(
-                                                    width: (MediaQuery.of(context)
-                                                                .size
-                                                                .width -
-                                                            180) /
-                                                        7,
+                                                    width:
+                                                        (MediaQuery.of(context)
+                                                                    .size
+                                                                    .width -
+                                                                180) /
+                                                            7,
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment.end,
@@ -632,17 +646,20 @@ class _scorecardState extends State<scorecard> {
                                                       ],
                                                     )),
                                                 SizedBox(
-                                                    width: (MediaQuery.of(context)
-                                                                .size
-                                                                .width -
-                                                            180) /
-                                                        5,
+                                                    width:
+                                                        (MediaQuery.of(context)
+                                                                    .size
+                                                                    .width -
+                                                                180) /
+                                                            5,
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment.end,
                                                       children: [
-                                                        Text(d.bowling[index3].eco
-                                                            .toStringAsFixed(1)),
+                                                        Text(d
+                                                            .bowling[index3].eco
+                                                            .toStringAsFixed(
+                                                                1)),
                                                       ],
                                                     )),
                                               ],
