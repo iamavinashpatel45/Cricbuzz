@@ -17,9 +17,23 @@ class fun_live {
       'https://api.cricapi.com/v1/match_scorecard?apikey=1fb77abf-7bce-4039-a199-6a805660e969&id=';
   static String basestring4 =
       'https://api.cricapi.com/v1/match_scorecard?apikey=f43ff17a-89d5-4d63-8833-c3d7552f1293&id=';
+  static String basestring5 =
+      'https://api.cricapi.com/v1/match_scorecard?apikey=ae34b124-da2b-4799-b32e-3d446b060130&id=';
+  static String basestring6 =
+      'https://api.cricapi.com/v1/match_scorecard?apikey=5c1bbce7-f4a2-4e51-be81-5c3e2f0e0177&id=';
+  static String basestring7 =
+      'https://api.cricapi.com/v1/match_scorecard?apikey=bf01a906-4de7-4480-aa69-1e4e48b6c568&id=';
+  static String basestring8 =
+      'https://api.cricapi.com/v1/match_scorecard?apikey=294e47ae-3b98-4095-8e3f-38a7ecf596a1&id=';
+  static String basestring9 =
+      'https://api.cricapi.com/v1/match_scorecard?apikey=666ea33c-e017-4b2c-807b-e000436bf17a&id=';
+  static String basestring10 =
+      'https://api.cricapi.com/v1/match_scorecard?apikey=3966c88a-09ff-41ac-8920-7e61ed0e1109&id=';
+  static String basestring11 =
+      'https://api.cricapi.com/v1/match_scorecard?apikey=decd3672-d637-491b-8644-369eae91b9eb&id=';
 
   static String? link;
-  static int? day,blower=null;
+  static int? day, blower = null;
   static bool? check;
   static bool test = false;
   static bool noscore = false;
@@ -40,22 +54,21 @@ class fun_live {
     }
   }
 
-  static int? checkblower(){
-    int x=data.scorecard[data.score.length-1].bowling.length;
-    int y=0;
-    for(int i=0;i<x;i++)
-      {
-        if(data.scorecard[data.score.length-1].bowling[i].o.toString().contains('.'))
-          {
-            blower=i;
-            y=1;
-            return i;
-          }
+  static int? checkblower() {
+    int x = data.scorecard[data.score.length - 1].bowling.length;
+    int y = 0;
+    for (int i = 0; i < x; i++) {
+      if (data.scorecard[data.score.length - 1].bowling[i].o
+          .toString()
+          .contains('.')) {
+        blower = i;
+        y = 1;
+        return i;
       }
-    if(y==1 && blower!=null)
-      {
-        return blower;
-      }
+    }
+    if (y == 1 && blower != null) {
+      return blower;
+    }
   }
 
   static checkInternet() async {
@@ -85,18 +98,57 @@ class fun_live {
           if (json_score.fromJson(map).data == null) {
             var res = await http.get(Uri.parse(basestring4 + link));
             map = json.decode(res.body);
-            print('4');
-            data = json_score.fromJson(map).data;
+            if (json_score.fromJson(map).data == null) {
+              var res = await http.get(Uri.parse(basestring5 + link));
+              map = json.decode(res.body);
+              if (json_score.fromJson(map).data == null) {
+                var res = await http.get(Uri.parse(basestring6 + link));
+                map = json.decode(res.body);
+                if (json_score.fromJson(map).data == null) {
+                  var res = await http.get(Uri.parse(basestring7 + link));
+                  map = json.decode(res.body);
+                  data = json_score.fromJson(map).data;
+                } else {
+                  data = json_score.fromJson(map).data;
+                }
+              } else {
+                data = json_score.fromJson(map).data;
+              }
+            } else {
+              data = json_score.fromJson(map).data;
+            }
           } else {
-            print('3');
             data = json_score.fromJson(map).data;
           }
         } else {
-          print('2');
           data = json_score.fromJson(map).data;
         }
       } else {
-        print('1');
+        data = json_score.fromJson(map).data;
+      }
+      if (json_score.fromJson(map).data == null) {
+        var res = await http.get(Uri.parse(basestring8 + link));
+        map = json.decode(res.body);
+        if (json_score.fromJson(map).data == null) {
+          var res = await http.get(Uri.parse(basestring9 + link));
+          map = json.decode(res.body);
+          if (json_score.fromJson(map).data == null) {
+            var res = await http.get(Uri.parse(basestring10 + link));
+            map = json.decode(res.body);
+            if (json_score.fromJson(map).data == null) {
+              var res = await http.get(Uri.parse(basestring11 + link));
+              map = json.decode(res.body);
+              data = json_score.fromJson(map).data;
+            } else {
+              data = json_score.fromJson(map).data;
+            }
+          } else {
+            data = json_score.fromJson(map).data;
+          }
+        } else {
+          data = json_score.fromJson(map).data;
+        }
+      } else {
         data = json_score.fromJson(map).data;
       }
     } else {

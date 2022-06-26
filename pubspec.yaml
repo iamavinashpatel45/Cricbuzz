@@ -1,5 +1,5 @@
 name: cricket
-description: A new Flutter project.
+description: Welcome to Cricbuzz APP
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -34,7 +34,6 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
   connectivity: ^3.0.6
   fluttertoast: ^8.0.8
   sticky_headers: ^0.2.0
@@ -42,6 +41,11 @@ dependencies:
   firebase_core: ^1.18.0
   firebase_auth: ^3.3.20
   cloud_firestore: ^3.1.18
+  image_picker: ^0.8.5
+  shared_preferences: ^2.0.15
+  flutter_local_notifications: ^9.5.3+1
+  url_launcher: ^6.1.5
+
 
 
 dev_dependencies:

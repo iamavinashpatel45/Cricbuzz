@@ -1,6 +1,6 @@
+import 'package:cricket/fun/fun_info.dart';
 import 'package:cricket/fun/fun_live.dart';
 import 'package:cricket/livescore/info/squads/squads.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class info extends StatefulWidget {
@@ -37,7 +37,12 @@ class _infoState extends State<info> {
             color: Color.fromARGB(255, 236, 240, 241),
             child: Padding(
               padding: const EdgeInsets.only(left: 15.0, top: 10),
-              child: Text('SQUADS'),
+              child: Text(
+                'SQUADS',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ),
           InkWell(
@@ -55,7 +60,7 @@ class _infoState extends State<info> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(fun_live.data.teams[0]),
+                    Text(fun_info.data[0].teamName),
                     Icon(Icons.navigate_next),
                   ],
                 ),
@@ -80,7 +85,7 @@ class _infoState extends State<info> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(fun_live.data.teams[1]),
+                    Text(fun_info.data[1].teamName),
                     Icon(Icons.navigate_next),
                   ],
                 ),
@@ -88,12 +93,17 @@ class _infoState extends State<info> {
             ),
           ),
           Container(
-            height: 50,
+            height: 40,
             width: MediaQuery.of(context).size.width,
             color: Color.fromARGB(255, 236, 240, 241),
             child: Padding(
               padding: const EdgeInsets.only(left: 15.0, top: 12),
-              child: Text('INFO'),
+              child: Text(
+                'INFO',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ),
           Column(
@@ -103,14 +113,19 @@ class _infoState extends State<info> {
                 height: 50,
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(
+                      left: 15.0, top: 8, right: 8, bottom: 8),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 3,
-                        child: Text('Match'),
+                        child: Text(
+                          'Match',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 123, 123, 123)),
+                        ),
                       ),
                       Expanded(
                         child: SizedBox(
@@ -126,14 +141,19 @@ class _infoState extends State<info> {
                 height: 50,
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(
+                      left: 15.0, top: 8, right: 8, bottom: 8),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 3,
-                        child: Text('MatchType'),
+                        child: Text(
+                          'MatchType',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 123, 123, 123)),
+                        ),
                       ),
                       Expanded(
                         child: SizedBox(
@@ -149,14 +169,19 @@ class _infoState extends State<info> {
                 height: 50,
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(
+                      left: 15.0, top: 8, right: 8, bottom: 8),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 3,
-                        child: Text('Date'),
+                        child: Text(
+                          'Date',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 123, 123, 123)),
+                        ),
                       ),
                       Expanded(
                         child: SizedBox(
@@ -186,14 +211,19 @@ class _infoState extends State<info> {
                 height: 50,
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(
+                      left: 15.0, top: 8, right: 8, bottom: 8),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 3,
-                        child: Text('Time'),
+                        child: Text(
+                          'Time',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 123, 123, 123)),
+                        ),
                       ),
                       Expanded(
                         child: SizedBox(
@@ -212,14 +242,19 @@ class _infoState extends State<info> {
                 height: 50,
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(
+                      left: 15.0, top: 8, right: 8, bottom: 8),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 3,
-                        child: Text('Venue'),
+                        child: Text(
+                          'Venue',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 123, 123, 123)),
+                        ),
                       ),
                       Expanded(
                         child: SizedBox(

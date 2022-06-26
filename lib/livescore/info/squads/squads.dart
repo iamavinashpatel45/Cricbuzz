@@ -13,17 +13,15 @@ class squads extends StatefulWidget {
 
 class _squadsState extends State<squads> {
   int? ind;
-  get(int x)
-  {
-    ind=x;
+
+  get(int x) {
+    ind = x;
   }
 
   @override
   void initState() {
     get(widget.index);
-    setState(() {
-
-    });
+    setState(() {});
     super.initState();
   }
 
@@ -41,12 +39,11 @@ class _squadsState extends State<squads> {
           elevation: 1,
           title: Text('Squads'),
           bottom: TabBar(
-
             indicatorColor: Colors.white,
             labelColor: Colors.white,
             labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
             unselectedLabelStyle:
-            TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
             tabs: [
               Tab(
                 text: fun_info.data[0].teamName,

@@ -1,17 +1,14 @@
-import 'dart:ui';
 import 'package:cricket/fun/fun_info.dart';
 import 'package:cricket/fun/fun_live.dart';
 import 'package:cricket/livescore/info/info.dart';
 import 'package:cricket/livescore/live/live_details.dart';
 import 'package:cricket/livescore/scorecard.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:share/share.dart';
 
 class live_screen extends StatefulWidget {
   final String? link;
+
   const live_screen({Key? key, required this.link}) : super(key: key);
 
   @override
@@ -54,6 +51,7 @@ class _live_screenState extends State<live_screen> {
   set() async {
     await fun_live.getdata(link!);
     await fun_info.getdata(link!);
+    //await fun_com.getdata(link!);
     fun_live.progressbar = false;
     fun_live.short();
     setState(() {});
@@ -70,6 +68,7 @@ class _live_screenState extends State<live_screen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+        initialIndex: 1,
         length: 3,
         child: Scaffold(
           appBar: fun_live.progressbar == false
@@ -105,22 +104,22 @@ class _live_screenState extends State<live_screen> {
                         width: 250,
                         child: fun_live.shortname == true
                             ? Text(
-                          fun_live.data.teamInfo[0].shortname +
-                              ' vs ' +
-                              fun_live.data.teamInfo[1].shortname,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        )
+                                fun_live.data.teamInfo[0].shortname +
+                                    ' vs ' +
+                                    fun_live.data.teamInfo[1].shortname,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              )
                             : Text(
-                            fun_live.data.teamInfo[0].name +
-                                ' vs ' +
-                                fun_live.data.teamInfo[1].name,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white)),
+                                fun_live.data.teamInfo[0].name +
+                                    ' vs ' +
+                                    fun_live.data.teamInfo[1].name,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 20.0),

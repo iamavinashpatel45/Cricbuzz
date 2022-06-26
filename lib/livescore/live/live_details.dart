@@ -2,6 +2,7 @@ import 'package:cricket/fun/fun_live.dart';
 import 'package:cricket/livescore/live/finish_match.dart';
 import 'package:cricket/livescore/live/live_match.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class live_details extends StatefulWidget {
   final String? link;

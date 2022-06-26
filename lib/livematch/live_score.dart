@@ -1,10 +1,10 @@
+import 'package:cricket/News/news.dart';
 import 'package:cricket/fun/fun.dart';
-import 'package:cricket/livematch/drawer.dart';
 import 'package:cricket/livematch/livematch.dart';
 import 'package:cricket/login/account.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cricket/login/login_page/login_screen.dart';
 import 'package:flutter/material.dart';
-import '../login/login_page/login_page.dart';
+import '../login/login_page/profile.dart';
 import 'serieslist.dart';
 
 class live_score extends StatefulWidget {
@@ -35,25 +35,42 @@ class _live_scoreState extends State<live_score> {
       length: 2,
       child: Scaffold(
           backgroundColor: Color.fromARGB(255, 0, 180, 137),
-          //drawer: account.login == true ? mydrawer() : Container(),
           appBar: AppBar(
-            elevation: 0,
+            elevation: 1,
             backgroundColor: Color.fromARGB(255, 0, 180, 137),
-            title: Center(
-                child: Padding(
-              padding: const EdgeInsets.only(top: 8.0, right: 8, bottom: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Hero(
-                    tag: Key('123'),
-                    child: Image.asset(
-                      'asstes/green_logo.png',
-                      height: 90,
-                    ),
-                  ),
-                  account.login == false
-                      ? Container(
+            title: Padding(
+              padding: const EdgeInsets.only(left: 18),
+              child: Image.asset(
+                'asstes/green_logo.png',
+                height: 100,
+              ),
+            ),
+            actions: [
+              Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration:
+                        BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                      BoxShadow(
+                        color: Colors.white,
+                        spreadRadius: 2,
+                      ),
+                      BoxShadow(
+                        color: Color.fromARGB(255, 0, 180, 137),
+                      ),
+                    ]),
+                    child: InkWell(
+                        onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => news())),
+                        child: Icon(Icons.newspaper))),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: account.login == false
+                    ? Center(
+                        child: Container(
                           width: 70,
                           height: 30,
                           decoration: BoxDecoration(
@@ -71,7 +88,7 @@ class _live_scoreState extends State<live_score> {
                             onTap: () => Navigator.of(context)
                                 .push(
                                   MaterialPageRoute(
-                                      builder: (context) => login_page()),
+                                      builder: (context) => LoginPage()),
                                 )
                                 .then((value) => {setState(() {})}),
                             child: Center(
@@ -81,36 +98,37 @@ class _live_scoreState extends State<live_score> {
                               ),
                             ),
                           ),
-                        )
-                      : Container(
-                    height:40,
+                        ),
+                      )
+                    : Center(
+                        child: Container(
+                          height: 40,
                           width: 40,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.white,
-                                  spreadRadius: 2,
-                                ),
-                                BoxShadow(
-                                  color: Color.fromARGB(255, 0, 180, 137),
-                                ),
-                              ]),
+                          decoration:
+                              BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                            BoxShadow(
+                              color: Colors.white,
+                              spreadRadius: 2,
+                            ),
+                            BoxShadow(
+                              color: Color.fromARGB(255, 0, 180, 137),
+                            ),
+                          ]),
                           child: IconButton(
-                            onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => mydrawer())),
+                            onPressed: () => Navigator.of(context)
+                                .push(
+                                  MaterialPageRoute(
+                                      builder: (context) => profile()),
+                                )
+                                .then((value) => {setState(() {})}),
                             icon: Center(
                               child: Icon(Icons.person_rounded),
                             ),
-                            tooltip: MaterialLocalizations.of(context)
-                                .openAppDrawerTooltip,
                           ),
                         ),
-                ],
+                      ),
               ),
-            )),
+            ],
             bottom: TabBar(
               indicatorColor: Colors.white,
               labelColor: Colors.white,

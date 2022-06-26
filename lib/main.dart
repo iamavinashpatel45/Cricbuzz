@@ -1,12 +1,8 @@
 import 'package:cricket/fun/fun.dart';
+import 'package:cricket/fun/fun_start.dart';
 import 'package:cricket/livematch/live_score.dart';
-import 'package:cricket/login/account.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:convert';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,16 +23,9 @@ class splash extends StatefulWidget {
 class _splashState extends State<splash> {
   gohome() async {
     fun.internet = await fun.checkInternet();
-    if (FirebaseAuth.instance.currentUser==null) {
-      account.login=false;
+    if (fun.internet == true) {
+      await fun_start.getdata();
     }
-    else
-      {
-        FirebaseFirestore.instance.collection('user').get().then((value) => {
-          account.login = true,
-          //account.email_={value['email']},
-        });
-      }
     await Future.delayed(Duration(seconds: 2));
     Navigator.pushReplacement(
       context,
@@ -55,7 +44,10 @@ class _splashState extends State<splash> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 0, 180, 137),
       body: Center(
-        child: Image.asset('asstes/green_logo.png'),
+        child: Image.asset(
+          'asstes/green_logo.png',
+          height: 100,
+        ),
       ),
     );
   }
