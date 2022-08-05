@@ -9,6 +9,7 @@ class myapp extends StatefulWidget {
 class _myappState extends State<myapp> {
   set() async {
     fun.internet = await fun.checkInternet();
+    setState(() {});
     if (fun.internet == true) {
       await fun.getdata_2();
     }
@@ -23,95 +24,113 @@ class _myappState extends State<myapp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 0, 180, 137),
+        //backgroundColor: Color.fromARGB(255, 0, 180, 137),
         body: fun.internet == true
             ? fun.data2?.length == null
                 ? Center(
                     child: CircularProgressIndicator(
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 0, 180, 137),
                     ),
                   )
                 : Padding(
-                    padding: const EdgeInsets.only(left: 8,right: 8,bottom: 8),
+                    padding: const EdgeInsets.only(
+                        left: 8, right: 8, bottom: 8, top: 2),
                     child: ListView.builder(
                         itemCount: fun.data2?.length,
                         itemBuilder: (context, index) {
                           var d = fun.data2![index];
                           return Card(
+                            elevation: 15,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             borderOnForeground: false,
                             color: Colors.grey[200],
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: ListTile(
-                                title: Text(
-                                  d['name'],
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  border: Border.all(
+                                      color: Colors.black, width: 0.5)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: ListTile(
+                                  title: Text(
+                                    d['name'],
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
+                                    ),
                                   ),
-                                ),
-                                subtitle: Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Column(
+                                  subtitle: Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: IntrinsicHeight(
+                                      child: Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            "ODI: " + d['odi'].toString(),
-                                            style:
-                                                TextStyle(color: Colors.black),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "ODI: " + d['odi'].toString(),
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                              SizedBox(
+                                                height: 2,
+                                              ),
+                                              Text(
+                                                "T20: " + d['t20'].toString(),
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                              SizedBox(
+                                                height: 2,
+                                              ),
+                                              Text(
+                                                "TEST: " + d['test'].toString(),
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            ],
                                           ),
                                           SizedBox(
-                                            height: 2,
+                                            width: 15,
                                           ),
-                                          Text(
-                                            "T20: " + d['t20'].toString(),
-                                            style:
-                                                TextStyle(color: Colors.black),
+                                          VerticalDivider(
+                                            color: Colors.black,
+                                            thickness: 1,
                                           ),
-                                          SizedBox(
-                                            height: 2,
-                                          ),
-                                          Text(
-                                            "TEST: " + d['test'].toString(),
-                                            style:
-                                                TextStyle(color: Colors.black),
+                                          // SizedBox(
+                                          //   width: 15,
+                                          // ),
+                                          Column(
+                                            // mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "StartDate: " +
+                                                    d['startDate'].toString(),
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                              SizedBox(
+                                                height: 2,
+                                              ),
+                                              Text(
+                                                "EndDate: " +
+                                                    d['endDate'].toString(),
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Column(
-                                        // mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "StartDate: " +
-                                                d['startDate'].toString(),
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                          SizedBox(
-                                            height: 2,
-                                          ),
-                                          Text(
-                                            "EndDate: " +
-                                                d['endDate'].toString(),
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ),

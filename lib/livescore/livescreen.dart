@@ -1,3 +1,4 @@
+import 'package:cricket/fun/fun_com.dart';
 import 'package:cricket/fun/fun_info.dart';
 import 'package:cricket/fun/fun_live.dart';
 import 'package:cricket/livescore/info/info.dart';
@@ -46,6 +47,16 @@ class _live_screenState extends State<live_screen> {
 
   getlink(String? l) {
     link = l;
+    if (fun_live.data != null) {
+      if (fun_live.data.id != link) {
+        set();
+      } else {
+        fun_live.progressbar = false;
+        setState(() {});
+      }
+    } else {
+      set();
+    }
   }
 
   set() async {
@@ -61,7 +72,6 @@ class _live_screenState extends State<live_screen> {
   void initState() {
     fun_live.progressbar = true;
     getlink(widget.link);
-    set();
     super.initState();
   }
 

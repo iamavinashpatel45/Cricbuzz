@@ -229,22 +229,24 @@ class _profileState extends State<profile> {
                                 showbottom();
                               }
                             },
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 0, 180, 137),
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  width: 0.5,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              child: Icon(
-                                Icons.camera_alt,
-                                color: Colors.white,
-                              ),
-                            ),
+                            child: edit == true
+                                ? Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 0, 180, 137),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        width: 0.5,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    child: Icon(
+                                      Icons.camera_alt,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Container(),
                           ))
                     ],
                   ),
@@ -258,155 +260,171 @@ class _profileState extends State<profile> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'First Name',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                          ),
+                        Row(
+                          children: [
+                            Icon(Icons.person_rounded,size: 20,color: Colors.grey,),
+                            Text(
+                              'First Name',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 5,
                         ),
-                        edit == false
-                            ? Container(
-                                height: 50,
-                                width:
-                                    (MediaQuery.of(context).size.width - 80) /
-                                        2,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(2),
-                                  border: Border.all(
-                                    width: 0.5,
-                                    color: Colors.grey,
+                        Material(
+                          elevation: 3,
+                          child: edit == false
+                              ? Container(
+                                  height: 50,
+                                  width:
+                                      (MediaQuery.of(context).size.width - 80) /
+                                          2,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(2),
+                                    border: Border.all(
+                                      width: 0.5,
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        account.fname_!,
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          account.fname_!,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       ),
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  height: 50,
+                                  width:
+                                      (MediaQuery.of(context).size.width - 80) /
+                                          2,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(2),
+                                    border: Border.all(
+                                      width: 0.5,
+                                      color: Colors.grey,
                                     ),
-                                  ],
-                                ),
-                              )
-                            : Container(
-                                height: 50,
-                                width:
-                                    (MediaQuery.of(context).size.width - 80) /
-                                        2,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(2),
-                                  border: Border.all(
-                                    width: 0.5,
-                                    color: Colors.grey,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: TextFormField(
+                                      onChanged: (value) {
+                                        fname = value;
+                                      },
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter your first Name';
+                                        }
+                                        return null;
+                                      },
+                                      maxLines: 1,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                      controller: TextEditingController()
+                                        ..text = fname,
+                                    ),
                                   ),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: TextFormField(
-                                    onChanged: (value) {
-                                      fname = value;
-                                    },
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter your first Name';
-                                      }
-                                      return null;
-                                    },
-                                    maxLines: 1,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                    ),
-                                    controller: TextEditingController()
-                                      ..text = fname,
-                                  ),
-                                ),
-                              )
+                        )
                       ],
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Last Name',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                          ),
+                        Row(
+                          children: [
+                            Icon(Icons.person_rounded,size: 20,color: Colors.grey,),
+                            Text(
+                              'Last Name',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 5,
                         ),
-                        edit == false
-                            ? Container(
-                                height: 50,
-                                width:
-                                    (MediaQuery.of(context).size.width - 80) /
-                                        2,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(2),
-                                  border: Border.all(
-                                    width: 0.5,
-                                    color: Colors.grey,
+                        Material(
+                          elevation: 3,
+                          child: edit == false
+                              ? Container(
+                                  height: 50,
+                                  width:
+                                      (MediaQuery.of(context).size.width - 80) /
+                                          2,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(2),
+                                    border: Border.all(
+                                      width: 0.5,
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        account.lname_!,
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          account.lname_!,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       ),
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  height: 50,
+                                  width:
+                                      (MediaQuery.of(context).size.width - 80) /
+                                          2,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(2),
+                                    border: Border.all(
+                                      width: 0.5,
+                                      color: Colors.grey,
                                     ),
-                                  ],
-                                ),
-                              )
-                            : Container(
-                                height: 50,
-                                width:
-                                    (MediaQuery.of(context).size.width - 80) /
-                                        2,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(2),
-                                  border: Border.all(
-                                    width: 0.5,
-                                    color: Colors.grey,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: TextFormField(
+                                      onChanged: (value) {
+                                        lname = value;
+                                      },
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter your last Name';
+                                        }
+                                        return null;
+                                      },
+                                      maxLines: 1,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                      controller: TextEditingController()
+                                        ..text = lname,
+                                    ),
                                   ),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: TextFormField(
-                                    onChanged: (value) {
-                                      lname = value;
-                                    },
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter your last Name';
-                                      }
-                                      return null;
-                                    },
-                                    maxLines: 1,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                    ),
-                                    controller: TextEditingController()
-                                      ..text = lname,
-                                  ),
-                                ),
-                              )
+                        )
                       ],
                     )
                   ],
@@ -414,73 +432,82 @@ class _profileState extends State<profile> {
                 SizedBox(
                   height: 20,
                 ),
-                Text(
-                  'Phone Number',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                  ),
+                Row(
+                  children: [
+                    Icon(Icons.phone,size: 20,color: Colors.grey,),
+                    Text(
+                      'Phone Number',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 5,
                 ),
-                edit == false
-                    ? Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width - 60,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(2),
-                          border: Border.all(
-                            width: 0.5,
-                            color: Colors.grey,
+                Material(
+                  elevation: 3,
+                  child: edit == false
+                      ? Container(
+                          height: 50,
+                          width: MediaQuery.of(context).size.width - 60,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(2),
+                            border: Border.all(
+                              width: 0.5,
+                              color: Colors.grey,
+                            ),
                           ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                account.num_!,
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w500),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  account.num_!,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),
+                                ),
                               ),
+                            ],
+                          ),
+                        )
+                      : Container(
+                          height: 50,
+                          width: MediaQuery.of(context).size.width - 60,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(2),
+                            border: Border.all(
+                              width: 0.5,
+                              color: Colors.grey,
                             ),
-                          ],
-                        ),
-                      )
-                    : Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width - 60,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(2),
-                          border: Border.all(
-                            width: 0.5,
-                            color: Colors.grey,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                num = value;
+                              },
+                              maxLines: 1,
+                              keyboardType: TextInputType.phone,
+                              validator: (value) {
+                                if (value?.length != 10) {
+                                  return 'Invalid Number';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                              controller: TextEditingController()..text = num,
+                            ),
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              num = value;
-                            },
-                            maxLines: 1,
-                            keyboardType: TextInputType.phone,
-                            validator: (value) {
-                              if (value?.length != 10) {
-                                return 'Invalid Number';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                            controller: TextEditingController()..text = num,
-                          ),
-                        ),
-                      ),
+                ),
                 edit == false
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -488,39 +515,47 @@ class _profileState extends State<profile> {
                           SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            'Email',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                            ),
+                          Row(
+                            children: [
+                              Icon(Icons.email_rounded,size: 20,color: Colors.grey,),
+                              Text(
+                                'Email',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 5,
                           ),
-                          Container(
-                            height: 50,
-                            width: MediaQuery.of(context).size.width - 60,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.circular(2),
-                              border: Border.all(
-                                width: 0.5,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    account.email_!,
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500),
-                                  ),
+                          Material(
+                            elevation: 3,
+                            child: Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width - 60,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(2),
+                                border: Border.all(
+                                  width: 0.5,
+                                  color: Colors.grey,
                                 ),
-                              ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      account.email_!,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           )
                         ],

@@ -3,12 +3,16 @@ import 'package:cricket/fun/fun_start.dart';
 import 'package:cricket/livematch/live_score.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      fontFamily: GoogleFonts.barlow().fontFamily
+    ),
     home: splash(),
   ));
 }
@@ -26,7 +30,7 @@ class _splashState extends State<splash> {
     if (fun.internet == true) {
       await fun_start.getdata();
     }
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => live_score()),
@@ -46,7 +50,7 @@ class _splashState extends State<splash> {
       body: Center(
         child: Image.asset(
           'asstes/green_logo.png',
-          height: 100,
+          height: 120,
         ),
       ),
     );

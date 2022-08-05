@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cricket/fun/fun_live.dart';
 import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
@@ -32,6 +33,7 @@ class _scorecardState extends State<scorecard> {
     setState(() {});
   }
 
+
   @override
   void initState() {
     getlink(widget.link);
@@ -56,14 +58,15 @@ class _scorecardState extends State<scorecard> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
+                      child: AutoSizeText(
                         fun_live.data.status,
+                        maxLines: 1,
                         style: TextStyle(
                           color: fun_live.status == false
                               ? Colors.red
                               : Colors.blue,
-                          fontSize:
-                              fun_live.data.status.length < 45 ? 15 : 13,
+                          fontSize: 15,
+                              //fun_live.data.status.length < 45 ? 15 : 13,
                         ),
                       ),
                     ),

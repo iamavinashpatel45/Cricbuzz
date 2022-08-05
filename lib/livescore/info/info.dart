@@ -110,7 +110,6 @@ class _infoState extends State<info> {
             //mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                height: 50,
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -137,34 +136,37 @@ class _infoState extends State<info> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 15.0, top: 8, right: 8, bottom: 8),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 3,
-                        child: Text(
-                          'MatchType',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 123, 123, 123)),
-                        ),
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.3,
-                          child: Text(fun_live.data.matchType),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              fun_live.data.matchType != null
+                  ? SizedBox(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 15.0, top: 8, right: 8, bottom: 8),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 3,
+                                child: Text(
+                                  'MatchType',
+                                  style: TextStyle(
+                                      color:
+                                          Color.fromARGB(255, 123, 123, 123)),
+                                ),
+                              ),
+                              Expanded(
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.3,
+                                  child: Text(fun_live.data.matchType),
+                                ),
+                              )
+                            ],
+                          )),
+                    )
+                  : Container(),
               SizedBox(
                 height: 50,
                 width: MediaQuery.of(context).size.width,

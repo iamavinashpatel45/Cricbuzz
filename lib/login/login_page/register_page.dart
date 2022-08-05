@@ -521,6 +521,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: Text(
                             'Sign in',
                             style: TextStyle(
+                              fontWeight: FontWeight.w800,
                               color: Colors.black,
                             ),
                           ),

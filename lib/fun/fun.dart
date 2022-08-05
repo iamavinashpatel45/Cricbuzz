@@ -158,8 +158,7 @@ class fun {
 
   static checkstatus(int index) {
     status = false;
-    var string = data![index]['status'];
-    status = string.contains('won');
+    status = data![index]['status'].contains('won');
   }
 
   static getdata_2() async {
@@ -283,10 +282,6 @@ class fun {
   }
 
   static String? date(int index) {
-    // print(DateTime.now());
-    // print(DateTime.parse(data![index]['dateTimeGMT']));
-    reminder=DateTime.now().isBefore(DateTime.parse(data![index]['dateTimeGMT']));
-   // print(reminder);
     String mon = data![index]['date'].substring(5, 7);
     day = int.parse(data![index]['date'].substring(8, 10));
     if (mon == '01') {
@@ -315,8 +310,7 @@ class fun {
       return 'Dec ';
     } else {
       DateTime month = DateTime.now();
-      String mon=month.month.toString();
-      print(mon);
+      String mon = month.month.toString();
       if (mon == '1') {
         return 'Jan ';
       } else if (mon == '2') {

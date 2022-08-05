@@ -41,39 +41,6 @@ class _comState extends State<com> {
         itemBuilder: (context, index) {
           int reverseindex = fun_com.data.bbb.length - index - 1;
           var d = fun_com.data.bbb[reverseindex];
-          // String dismissal="";
-          // String catcher="";
-          // String penalty="";
-          // try {
-          //   dismissal = d.dismissal;
-          //   catcher = d.catcher;
-          //   penalty = d.penalty;
-          // } catch (e) {}
-          // if (d.ball == 1) { print("vjvbsjvjsvj");
-          //  // print(arr);
-          //   arr.clear();
-          // }
-          // if(dismissal.isNotEmpty)
-          //   {
-          //     arr.add("W");
-          //   }
-          // else if(penalty.isNotEmpty)
-          //   {
-          //     if(penalty=="byes")
-          //       {
-          //         arr.add("LB");
-          //       }
-          //     else
-          //       {
-          //         arr.add("WD");
-          //       }
-          //   }
-          // else
-          //   {
-          //     print(d.runs);
-          //     arr.add(d.runs.toString());
-          //   }
-          // print(arr);
           return Column(
             children: [
               d.ball == 6

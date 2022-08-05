@@ -87,7 +87,7 @@ class fun_com {
         data = json_com.fromJson(map).data;
       }
       //new
-      if (json_com.fromJson(map).data == null) {
+      if (data == null) {
         var res = await http.get(Uri.parse(basestring8 + link));
         map = json.decode(res.body);
         if (json_com.fromJson(map).data == null) {

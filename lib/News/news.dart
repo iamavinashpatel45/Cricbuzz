@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cricket/fun/fun.dart';
 import 'package:cricket/fun/fun_news.dart';
 import 'package:flutter/material.dart';
@@ -29,28 +30,29 @@ class _newsState extends State<news> {
 
   set() async {
     fun.internet = await fun.checkInternet();
+    setState(() {});
     if (fun.internet == true) {
-      setState(() {});
       await fun_news.getdata();
     }
-    setState(() {});
+    setState(() {
+      Fluttertoast.showToast(msg: "To Get More Details Tap on.");
+    });
   }
 
   @override
   void initState() {
     set();
-    Fluttertoast.showToast(msg: "To Get More Details Tab It.");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 180, 137),
+      //backgroundColor: Color.fromARGB(255, 0, 180, 137),
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 0, 180, 137),
-        title: Text('Cricket News'),
-        elevation: 1,
+        title: Text('Sports News'),
+        elevation: 2,
       ),
       body: fun.internet == true
           ? fun_news.data == null
@@ -63,66 +65,162 @@ class _newsState extends State<news> {
                   key: global_key,
                   onRefresh: () => set(),
                   child: ListView.builder(
-                      itemCount: 15,
+                      itemCount: fun_news.data.length,
                       itemBuilder: (context, index) {
                         var d = fun_news.data[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 2),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: InkWell(
-                              onTap: () async {
-                                await lunch_url(d.url);
-                              },
-                              child: ListTile(
-                                title: Text(
-                                  d.title,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
+                        return d.title == null
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 2, horizontal: 5),
+                                child: Card(
+                                  elevation: 15,
+                                 // color: Colors.grey[300],
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    d.urlToImage == null
-                                        ? Container()
-                                        : Container(
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await lunch_url(d.url);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          border: Border.all(
+                                              color: Colors.black, width: 0.5)),
+                                      child: ListTile(
+                                        title: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 5),
+                                          child: Container(
                                             width: MediaQuery.of(context)
-                                                    .size
-                                                    .width -
-                                                30,
-                                            height: 200,
+                                                .size
+                                                .width,
                                             decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                              image: AssetImage(
-                                                  'asstes/app_icon.jpg'),
-                                            )),
-                                            child: Image.network(
-                                              d.urlToImage,
-                                              fit: BoxFit.fill,
-                                            )),
-                                    Text(d.description,style: TextStyle(
-                                      color: Colors.black,
-                                    ),),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Source : " + d.source.name,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                border: Border.all(width: 1)),
+                                            child: Material(
+                                              elevation: 8,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(3),
+                                                child: Text(
+                                                  d.title,
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 2,
+                                            ),
+                                            d.urlToImage == null
+                                                ? Container()
+                                                : Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(3),
+                                                    child: Material(
+                                                      elevation: 5,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: Container(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              3.5,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  border: Border.all(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      width: 1),
+                                                                  image:
+                                                                      DecorationImage(
+                                                                    image: AssetImage(
+                                                                        'asstes/app_icon.jpg'),
+                                                                  )),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                            child: Image.network(
+                                                                d.urlToImage,
+                                                                fit: BoxFit
+                                                                    .fill),
+                                                          )),
+                                                    ),
+                                                  ),
+                                            SizedBox(
+                                              height: 2,
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(width: 1)),
+                                              child: Material(
+                                                elevation: 2,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(3),
+                                                  child: Text(
+                                                    d.description == null
+                                                        ? ''
+                                                        : d.description,
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Divider(
+                                              color: Colors.black,
+                                            ),
+                                            Text(
+                                              d.source.name == null
+                                                  ? ""
+                                                  : "Source : " + d.source.name,
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        );
+                              );
                       }))
           : Container(
               child: Column(
@@ -132,9 +230,10 @@ class _newsState extends State<news> {
                     'Whoops!',
                     style: TextStyle(fontSize: 40),
                   ),
-                  Text(
-                    'No Internet Connection Found',
+                  AutoSizeText(
+                    '  No Internet Connection Found  ',
                     style: TextStyle(fontSize: 25),
+                    maxLines: 1,
                   ),
                   Text(
                     'Check Your Internet',

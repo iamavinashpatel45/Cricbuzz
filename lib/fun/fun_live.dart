@@ -126,7 +126,7 @@ class fun_live {
       } else {
         data = json_score.fromJson(map).data;
       }
-      if (json_score.fromJson(map).data == null) {
+      if (data == null) {
         var res = await http.get(Uri.parse(basestring8 + link));
         map = json.decode(res.body);
         if (json_score.fromJson(map).data == null) {

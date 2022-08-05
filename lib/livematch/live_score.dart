@@ -4,6 +4,7 @@ import 'package:cricket/livematch/livematch.dart';
 import 'package:cricket/login/account.dart';
 import 'package:cricket/login/login_page/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import '../login/login_page/profile.dart';
 import 'serieslist.dart';
 
@@ -34,7 +35,7 @@ class _live_scoreState extends State<live_score> {
         body: DefaultTabController(
       length: 2,
       child: Scaffold(
-          backgroundColor: Color.fromARGB(255, 0, 180, 137),
+         // backgroundColor: Color.fromARGB(255, 0, 180, 137),
           appBar: AppBar(
             elevation: 1,
             backgroundColor: Color.fromARGB(255, 0, 180, 137),
@@ -47,8 +48,9 @@ class _live_scoreState extends State<live_score> {
             ),
             actions: [
               Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: Container(
+                padding: EdgeInsets.only(right: 20, top: 5),
+                child: AnimatedContainer(
+                    duration: Duration(milliseconds: 2),
                     height: 40,
                     width: 40,
                     decoration:
@@ -62,13 +64,17 @@ class _live_scoreState extends State<live_score> {
                       ),
                     ]),
                     child: InkWell(
-                        onTap: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => news())),
+                        onTap: () => Navigator.push(
+                            context,
+                            PageTransition(
+                                child: news(),
+                                duration: Duration(milliseconds: 400),
+                                type: PageTransitionType.bottomToTop)),
                         child: Icon(Icons.newspaper))),
               ),
               Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: account.login == false
+                padding: EdgeInsets.only(right: 25, top: 5),
+                child: fun.internet == false || account.login == false
                     ? Center(
                         child: Container(
                           width: 70,
@@ -86,10 +92,10 @@ class _live_scoreState extends State<live_score> {
                               ]),
                           child: InkWell(
                             onTap: () => Navigator.of(context)
-                                .push(
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
-                                )
+                                .push(PageTransition(
+                                    child: LoginPage(),
+                                    duration: Duration(milliseconds: 400),
+                                    type: PageTransitionType.bottomToTop))
                                 .then((value) => {setState(() {})}),
                             child: Center(
                               child: Text(
@@ -116,10 +122,10 @@ class _live_scoreState extends State<live_score> {
                           ]),
                           child: IconButton(
                             onPressed: () => Navigator.of(context)
-                                .push(
-                                  MaterialPageRoute(
-                                      builder: (context) => profile()),
-                                )
+                                .push(PageTransition(
+                                    child: profile(),
+                                    duration: Duration(milliseconds: 400),
+                                    type: PageTransitionType.bottomToTop))
                                 .then((value) => {setState(() {})}),
                             icon: Center(
                               child: Icon(Icons.person_rounded),
@@ -134,7 +140,7 @@ class _live_scoreState extends State<live_score> {
               labelColor: Colors.white,
               labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               unselectedLabelStyle:
-                  TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                  TextStyle(fontWeight: FontWeight.normal, fontSize: 15),
               tabs: [
                 Tab(
                   text: 'Live-Match',

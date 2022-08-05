@@ -5,6 +5,7 @@ import 'package:cricket/login/login_page/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,14 +18,11 @@ class _LoginPageState extends State<LoginPage> {
   String? email;
   String? password;
 
-  homepage()async{
+  homepage() async {
     account.login = true;
     await fun_start.getdate_2();
     Navigator.pop(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                live_score()));
+        context, MaterialPageRoute(builder: (context) => live_score()));
   }
 
   @override
@@ -204,6 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             'Reset Password',
                             style: TextStyle(
+                              fontWeight: FontWeight.w800,
                               color: Colors.black,
                             ),
                           ),
@@ -225,7 +224,10 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: Text(
                             'Create an account',
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
                         ),
                       ],

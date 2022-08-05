@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cricket/fun/fun_live.dart';
 import 'package:cricket/livescore/live/com.dart';
 import 'package:flutter/material.dart';
@@ -105,11 +106,12 @@ class _live_match_2State extends State<live_match_2> {
             padding: const EdgeInsets.only(left: 15, top: 10, right: 15),
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: Text(
+              child: AutoSizeText(
                 fun_live.data.status,
+                maxLines: 1,
                 style: TextStyle(
                   color: fun_live.status == false ? Colors.red : Colors.blue,
-                  fontSize: fun_live.data.status.length < 45 ? 15 : 13,
+                  fontSize: 15,//fun_live.data.status.length < 45 ? 15 : 13,
                 ),
               ),
             ),

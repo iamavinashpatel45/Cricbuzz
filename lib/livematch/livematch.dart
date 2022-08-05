@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'package:cricket/fun/fun.dart';
-import 'package:cricket/fun/fun_info.dart';
-import 'package:cricket/fun/fun_live.dart';
-import 'package:cricket/fun/fun_notification.dart';
+import 'package:cricket/livescore/livescreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../livescore/livescreen.dart';
+import 'package:page_transition/page_transition.dart';
 
 class live_match extends StatefulWidget {
   const live_match({Key? key}) : super(key: key);
@@ -22,8 +20,8 @@ class _live_matchState extends State<live_match> {
 
   set() async {
     fun.internet = await fun.checkInternet();
+    setState(() {});
     if (fun.internet == true) {
-      setState(() {});
       await fun.getdata();
     }
     setState(() {});
@@ -32,7 +30,7 @@ class _live_matchState extends State<live_match> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(minutes: 2), (timer) {
+    timer = Timer.periodic(Duration(minutes: 3), (timer) {
       set();
     });
   }
@@ -42,8 +40,9 @@ class _live_matchState extends State<live_match> {
     return fun.internet == true
         ? fun.data?.length == null
             ? Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
+                child: //shimmer(),
+                    CircularProgressIndicator(
+                  color: Color.fromARGB(255, 0, 180, 137),
                 ),
               )
             : RefreshIndicator(
@@ -57,480 +56,499 @@ class _live_matchState extends State<live_match> {
                       fun.short(index);
                       fun.check_score(index);
                       fun.checkstatus(index);
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        child: InkWell(
-                          onTap: () => Navigator.of(context)
-                              .push(
-                                MaterialPageRoute(
-                                    builder: (context) => live_screen(
-                                          link: d['id'],
-                                        )),
-                              )
-                              .then((value) => {
-                                    fun_info.data = null,
-                                    fun_live.data = null,
-                                  }),
-                          child: Card(
-                            borderOnForeground: false,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: ListTile(
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            d['name'],
-                                            style: TextStyle(
-                                              color: Colors.blue,
-                                            ),
+                      return index % 4 != 0
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 1),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          child: live_screen(
+                                            link: d['id'],
                                           ),
-                                        ),
-                                        fun.reminder == true
-                                            ? InkWell(
-                                                onTap: () {
-                                                  fun_notification.setnotification(d['name'], d['dateTimeGMT']);
-                                                },
-                                                child: Icon(Icons
-                                                    .notifications_none_sharp))
-                                            : Container()
-                                      ],
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Venue: ',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            d['venue'],
-                                            style: TextStyle(fontSize: 12),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Time: ',
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              d['dateTimeGMT'].substring(
-                                                  11, d['dateTimeGMT'].length),
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 8.0, bottom: 5),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                'Date: ',
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              fun.test == true
-                                                  ? Text(
-                                                      fun.date(index)! +
-                                                          fun.day.toString() +
-                                                          ' - ' +
-                                                          fun.date(index)! +
-                                                          (fun.day! + 4)
-                                                              .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 12),
-                                                    )
-                                                  : Text(
-                                                      fun.date(index)! +
-                                                          ' ' +
-                                                          fun.day.toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 12),
-                                                    ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: Column(
+                                          type: PageTransitionType.rightToLeft,
+                                          duration:
+                                              Duration(milliseconds: 400)));
+                                },
+                                // onTap: () => Navigator.of(context)
+                                //     .push(
+                                //       MaterialPageRoute(
+                                //           builder: (context) => live_screen(
+                                //                 link: d['id'],
+                                //               )),
+                                //     )
+                                //     .then((value) => {
+                                //           fun_info.data = null,
+                                //           fun_live.data = null,
+                                //         }),
+                                child: Card(
+                                  elevation: 15,
+                                  shadowColor: Colors.black,
+                                  borderOnForeground: false,
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        border: Border.all(
+                                            color: Colors.black, width: 0.5)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 2),
+                                      child: ListTile(
+                                        title: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Row(
+                                                Expanded(
+                                                  child: Text(
+                                                    d['name'],
+                                                    style: TextStyle(
+                                                      color: Colors.blue,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Venue: ',
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    d['venue'],
+                                                    style:
+                                                        TextStyle(fontSize: 12),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            IntrinsicHeight(
+                                              child: Row(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        'Time: ',
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      Text(
+                                                        d['dateTimeGMT']
+                                                            .substring(
+                                                                11,
+                                                                d['dateTimeGMT']
+                                                                    .length),
+                                                        style: TextStyle(
+                                                            fontSize: 12),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 3,
+                                                            top: 3),
+                                                    child: VerticalDivider(
+                                                      color: Colors.black,
+                                                      thickness: 1,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 8.0,
+                                                            bottom: 5),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          'Date: ',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        fun.test == true
+                                                            ? Text(
+                                                                fun.date(
+                                                                        index)! +
+                                                                    fun.day
+                                                                        .toString() +
+                                                                    ' - ' +
+                                                                    fun.date(
+                                                                        index)! +
+                                                                    (fun.day! +
+                                                                            4)
+                                                                        .toString(),
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        12),
+                                                              )
+                                                            : Text(
+                                                                fun.date(
+                                                                        index)! +
+                                                                    ' ' +
+                                                                    fun.day
+                                                                        .toString(),
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        12),
+                                                              ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[100],
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                border: Border.all(
+                                                  color: Colors.blueGrey,
+                                                  width: 0.5
+                                                )
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                child: Column(
                                                   children: [
-                                                    Image.network(
-                                                      d['teamInfo'][0]['img'],
-                                                      height: 30,
-                                                      fit: BoxFit.fitHeight,
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                      image:
+                                                                          DecorationImage(
+                                                                image: AssetImage(
+                                                                    'asstes/progressbar.png'),
+                                                              )),
+                                                              child:
+                                                                  Image.network(
+                                                                d['teamInfo'][0]
+                                                                    ['img'],
+                                                                height: 30,
+                                                                fit: BoxFit
+                                                                    .fitHeight,
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            fun.shortname ==
+                                                                    true
+                                                                ? Text(
+                                                                    d['teamInfo']
+                                                                            [0][
+                                                                        'shortname'],
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        color: Colors
+                                                                            .black),
+                                                                  )
+                                                                : SizedBox(
+                                                                    width: 160,
+                                                                    child: Text(
+                                                                        d['teamInfo'][0]
+                                                                            [
+                                                                            'name'],
+                                                                        overflow:
+                                                                            TextOverflow
+                                                                                .ellipsis,
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            color: Colors.black)),
+                                                                  ),
+                                                          ],
+                                                        ),
+                                                        fun.check == true
+                                                            ? fun.a == true
+                                                                ? fun.c == true
+                                                                    ? Column(
+                                                                        children: [
+                                                                          Text(
+                                                                            d['score'][0]['r'].toString() +
+                                                                                '/' +
+                                                                                d['score'][0]['w'].toString() +
+                                                                                '(' +
+                                                                                d['score'][0]['o'].toString() +
+                                                                                ' ov)',
+                                                                            style:
+                                                                                TextStyle(color: Colors.black),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                5,
+                                                                          ),
+                                                                          Text(
+                                                                            d['score'][2]['r'].toString() +
+                                                                                '/' +
+                                                                                d['score'][2]['w'].toString() +
+                                                                                '(' +
+                                                                                d['score'][2]['o'].toString() +
+                                                                                ' ov)',
+                                                                            style:
+                                                                                TextStyle(color: Colors.black),
+                                                                          ),
+                                                                        ],
+                                                                      )
+                                                                    : Text(
+                                                                        d['score'][0]['r'].toString() +
+                                                                            '/' +
+                                                                            d['score'][0]['w'].toString() +
+                                                                            '(' +
+                                                                            d['score'][0]['o'].toString() +
+                                                                            ' ov)',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.black),
+                                                                      )
+                                                                : Container()
+                                                            : fun.b == true
+                                                                ? fun.d == true
+                                                                    ? Column(
+                                                                        children: [
+                                                                          Text(
+                                                                            d['score'][1]['r'].toString() +
+                                                                                '/' +
+                                                                                d['score'][1]['w'].toString() +
+                                                                                '(' +
+                                                                                d['score'][1]['o'].toString() +
+                                                                                ' ov)',
+                                                                            style:
+                                                                                TextStyle(color: Colors.black),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                5,
+                                                                          ),
+                                                                          Text(
+                                                                            d['score'][3]['r'].toString() +
+                                                                                '/' +
+                                                                                d['score'][3]['w'].toString() +
+                                                                                '(' +
+                                                                                d['score'][3]['o'].toString() +
+                                                                                ' ov)',
+                                                                            style:
+                                                                                TextStyle(color: Colors.black),
+                                                                          ),
+                                                                        ],
+                                                                      )
+                                                                    : Text(
+                                                                        d['score'][1]['r'].toString() +
+                                                                            '/' +
+                                                                            d['score'][1]['w'].toString() +
+                                                                            '(' +
+                                                                            d['score'][1]['o'].toString() +
+                                                                            ' ov)',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.black),
+                                                                      )
+                                                                : Container(),
+                                                      ],
                                                     ),
                                                     SizedBox(
-                                                      width: 10,
+                                                      height: 15,
                                                     ),
-                                                    fun.shortname == true
-                                                        ? Text(
-                                                            d['teamInfo'][0]
-                                                                ['shortname'],
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                                        : SizedBox(
-                                                            width: 160,
-                                                            child: Text(
-                                                                d['teamInfo'][0]
-                                                                    ['name'],
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color: Colors
-                                                                        .black)),
-                                                          ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Image.network(
+                                                              d['teamInfo'][1]
+                                                                  ['img'],
+                                                              height: 30,
+                                                              fit: BoxFit.fill,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            fun.shortname ==
+                                                                    true
+                                                                ? Text(
+                                                                    d['teamInfo']
+                                                                            [1][
+                                                                        'shortname'],
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        color: Colors
+                                                                            .black),
+                                                                  )
+                                                                : SizedBox(
+                                                                    width: 160,
+                                                                    child: Text(
+                                                                        d['teamInfo'][1]
+                                                                            [
+                                                                            'name'],
+                                                                        overflow:
+                                                                            TextOverflow
+                                                                                .ellipsis,
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            color: Colors.black)),
+                                                                  ),
+                                                          ],
+                                                        ),
+                                                        fun.check == true
+                                                            ? fun.b == true
+                                                                ? d == true
+                                                                    ? Column(
+                                                                        children: [
+                                                                          Text(
+                                                                            d['score'][1]['r'].toString() +
+                                                                                '/' +
+                                                                                d['score'][1]['w'].toString() +
+                                                                                '(' +
+                                                                                d['score'][1]['o'].toString() +
+                                                                                ' ov)',
+                                                                            style:
+                                                                                TextStyle(color: Colors.black),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                5,
+                                                                          ),
+                                                                          Text(
+                                                                            d['score'][3]['r'].toString() +
+                                                                                '/' +
+                                                                                d['score'][3]['w'].toString() +
+                                                                                '(' +
+                                                                                d['score'][3]['o'].toString() +
+                                                                                ' ov)',
+                                                                            style:
+                                                                                TextStyle(color: Colors.black),
+                                                                          ),
+                                                                        ],
+                                                                      )
+                                                                    : Text(
+                                                                        d['score'][1]['r'].toString() +
+                                                                            '/' +
+                                                                            d['score'][1]['w'].toString() +
+                                                                            '(' +
+                                                                            d['score'][1]['o'].toString() +
+                                                                            ' ov)',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.black),
+                                                                      )
+                                                                : Container()
+                                                            : fun.a == true
+                                                                ? fun.c == true
+                                                                    ? Column(
+                                                                        children: [
+                                                                          Text(
+                                                                            d['score'][0]['r'].toString() +
+                                                                                '/' +
+                                                                                d['score'][0]['w'].toString() +
+                                                                                '(' +
+                                                                                d['score'][0]['o'].toString() +
+                                                                                ' ov)',
+                                                                            style:
+                                                                                TextStyle(color: Colors.black),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                5,
+                                                                          ),
+                                                                          Text(
+                                                                            d['score'][2]['r'].toString() +
+                                                                                '/' +
+                                                                                d['score'][2]['w'].toString() +
+                                                                                '(' +
+                                                                                d['score'][2]['o'].toString() +
+                                                                                ' ov)',
+                                                                            style:
+                                                                                TextStyle(color: Colors.black),
+                                                                          ),
+                                                                        ],
+                                                                      )
+                                                                    : Text(
+                                                                        d['score'][0]['r'].toString() +
+                                                                            '/' +
+                                                                            d['score'][0]['w'].toString() +
+                                                                            '(' +
+                                                                            d['score'][0]['o'].toString() +
+                                                                            ' ov)',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.black),
+                                                                      )
+                                                                : Container()
+                                                      ],
+                                                    ),
                                                   ],
                                                 ),
-                                                fun.check == true
-                                                    ? fun.a == true
-                                                        ? fun.c == true
-                                                            ? Column(
-                                                                children: [
-                                                                  Text(
-                                                                    d['score'][0]['r'].toString() +
-                                                                        '/' +
-                                                                        d['score'][0]['w']
-                                                                            .toString() +
-                                                                        '(' +
-                                                                        d['score'][0]['o']
-                                                                            .toString() +
-                                                                        ' ov)',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 5,
-                                                                  ),
-                                                                  Text(
-                                                                    d['score'][2]['r'].toString() +
-                                                                        '/' +
-                                                                        d['score'][2]['w']
-                                                                            .toString() +
-                                                                        '(' +
-                                                                        d['score'][2]['o']
-                                                                            .toString() +
-                                                                        ' ov)',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                            : Text(
-                                                                d['score'][0][
-                                                                            'r']
-                                                                        .toString() +
-                                                                    '/' +
-                                                                    d['score'][0]
-                                                                            [
-                                                                            'w']
-                                                                        .toString() +
-                                                                    '(' +
-                                                                    d['score'][0]
-                                                                            [
-                                                                            'o']
-                                                                        .toString() +
-                                                                    ' ov)',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              )
-                                                        : Container()
-                                                    : fun.b == true
-                                                        ? fun.d == true
-                                                            ? Column(
-                                                                children: [
-                                                                  Text(
-                                                                    d['score'][1]['r'].toString() +
-                                                                        '/' +
-                                                                        d['score'][1]['w']
-                                                                            .toString() +
-                                                                        '(' +
-                                                                        d['score'][1]['o']
-                                                                            .toString() +
-                                                                        ' ov)',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 5,
-                                                                  ),
-                                                                  Text(
-                                                                    d['score'][3]['r'].toString() +
-                                                                        '/' +
-                                                                        d['score'][3]['w']
-                                                                            .toString() +
-                                                                        '(' +
-                                                                        d['score'][3]['o']
-                                                                            .toString() +
-                                                                        ' ov)',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                            : Text(
-                                                                d['score'][1][
-                                                                            'r']
-                                                                        .toString() +
-                                                                    '/' +
-                                                                    d['score'][1]
-                                                                            [
-                                                                            'w']
-                                                                        .toString() +
-                                                                    '(' +
-                                                                    d['score'][1]
-                                                                            [
-                                                                            'o']
-                                                                        .toString() +
-                                                                    ' ov)',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              )
-                                                        : Container(),
-                                              ],
+                                              ),
                                             ),
                                             SizedBox(
-                                              height: 15,
+                                              height: 5,
                                             ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Image.network(
-                                                      d['teamInfo'][1]['img'],
-                                                      height: 30,
-                                                      fit: BoxFit.fill,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    fun.shortname == true
-                                                        ? Text(
-                                                            d['teamInfo'][1]
-                                                                ['shortname'],
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                                        : SizedBox(
-                                                            width: 160,
-                                                            child: Text(
-                                                                d['teamInfo'][1]
-                                                                    ['name'],
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color: Colors
-                                                                        .black)),
-                                                          ),
-                                                  ],
-                                                ),
-                                                fun.check == true
-                                                    ? fun.b == true
-                                                        ? d == true
-                                                            ? Column(
-                                                                children: [
-                                                                  Text(
-                                                                    d['score'][1]['r'].toString() +
-                                                                        '/' +
-                                                                        d['score'][1]['w']
-                                                                            .toString() +
-                                                                        '(' +
-                                                                        d['score'][1]['o']
-                                                                            .toString() +
-                                                                        ' ov)',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 5,
-                                                                  ),
-                                                                  Text(
-                                                                    d['score'][3]['r'].toString() +
-                                                                        '/' +
-                                                                        d['score'][3]['w']
-                                                                            .toString() +
-                                                                        '(' +
-                                                                        d['score'][3]['o']
-                                                                            .toString() +
-                                                                        ' ov)',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                            : Text(
-                                                                d['score'][1][
-                                                                            'r']
-                                                                        .toString() +
-                                                                    '/' +
-                                                                    d['score'][1]
-                                                                            [
-                                                                            'w']
-                                                                        .toString() +
-                                                                    '(' +
-                                                                    d['score'][1]
-                                                                            [
-                                                                            'o']
-                                                                        .toString() +
-                                                                    ' ov)',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              )
-                                                        : Container()
-                                                    : fun.a == true
-                                                        ? fun.c == true
-                                                            ? Column(
-                                                                children: [
-                                                                  Text(
-                                                                    d['score'][0]['r'].toString() +
-                                                                        '/' +
-                                                                        d['score'][0]['w']
-                                                                            .toString() +
-                                                                        '(' +
-                                                                        d['score'][0]['o']
-                                                                            .toString() +
-                                                                        ' ov)',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 5,
-                                                                  ),
-                                                                  Text(
-                                                                    d['score'][2]['r'].toString() +
-                                                                        '/' +
-                                                                        d['score'][2]['w']
-                                                                            .toString() +
-                                                                        '(' +
-                                                                        d['score'][2]['o']
-                                                                            .toString() +
-                                                                        ' ov)',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                            : Text(
-                                                                d['score'][0][
-                                                                            'r']
-                                                                        .toString() +
-                                                                    '/' +
-                                                                    d['score'][0]
-                                                                            [
-                                                                            'w']
-                                                                        .toString() +
-                                                                    '(' +
-                                                                    d['score'][0]
-                                                                            [
-                                                                            'o']
-                                                                        .toString() +
-                                                                    ' ov)',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              )
-                                                        : Container()
-                                              ],
+                                            Text(
+                                              d['status'],
+                                              style: TextStyle(
+                                                color: fun.status == false
+                                                    ? Colors.red
+                                                    : Colors.blue,
+                                              ),
                                             ),
                                           ],
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      d['status'],
-                                      style: TextStyle(
-                                        color: fun.status == false
-                                            ? Colors.red
-                                            : Colors.blue,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                      );
+                            )
+                          : Container(
+                              alignment: Alignment.center,
+                              //child: fun_ads.adWidget,
+                            );
                     }),
               )
         : Container(
